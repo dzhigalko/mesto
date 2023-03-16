@@ -5,7 +5,15 @@
     min-width: 24px;
     min-height: 24px;
     padding: 0;
-    border: none;
+    border: 2px solid #fff;
     background-color: transparent;
-    cursor: pointer; 
+    cursor: pointer;
+    align-self: center;
+}
+
+@media screen and (max-width: 767px) {
+    .profile__button-edit {
+        min-width: 18px;
+        min-height: 18px;
+    }
 }

@@ -10,4 +10,13 @@
     cursor: pointer;
     margin: 0 0 0 auto;
     border: 2px solid #fff;
+    justify-items: center;
+    align-self: center;
+}
+
+@media screen and (max-width: 840px) {
+    .profile__button-add {
+        margin: auto 0;
+        min-width: 282px;
+    }
 }
