@@ -4,6 +4,6 @@
   В написании использовала html,css и, впервые, JavaScript.
   Придерживалась принципов [БЭМ](https://ru.bem.info/).
     
-    [Ссылка на проект](https://dzhigalko.github.io/mesto/)
+[Ссылка на проект](https://dzhigalko.github.io/mesto/)
     
-    Дарья Жигалко
+Дарья Жигалко
