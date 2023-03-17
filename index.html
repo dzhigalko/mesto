@@ -15,53 +15,53 @@
                 <img class="avatar" src="./images/Avatar.svg" alt="Фото профиля">
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
-                    <button class="profile__button-edit"></button>
+                    <button class="profile__button-edit" type="button" aria-label="Редактировать"></button>
                     <p class="profile__about">Исследователь океана</p>
                 </div>
-                <button class="profile__button-add"></button>
+                <button class="profile__button-add" type="button" aria-label="Добавить"></button>
             </section>
             <section class="photos">
-                <ul class="elements">
+                <ul class="photo-grid">
                     <li class="photo"> 
                         <img class="photo__item" src="./images/Ингушетия.jpeg" alt="Гора на рассвете">
                         <div class="photo__info">
                             <h3 class="photo__description">Ингушетия</h3>
-                            <button class="photo__like"></button>
+                            <button class="photo__like" type="button" aria-label="Лайк"></button>
                         </div>
                     </li>
                     <li class="photo">
                         <img class="photo__item" src="./images/Иркутск.jpeg" alt="Ледяной узор">
                         <div class="photo__info">
                             <h3 class="photo__description">Иркутск</h3>
-                            <button class="photo__like"></button>
+                            <button class="photo__like" type="button" aria-label="Лайк"></button>
                         </div>
                     </li>
                     <li class="photo">
                         <img class="photo__item" src="./images/Мурманск.jpeg" alt="Река с высоты полёта">
                         <div class="photo__info">
                             <h3 class="photo__description">Мурманск</h3>
-                            <button class="photo__like"></button>
+                            <button class="photo__like" type="button" aria-label="Лайк"></button>
                         </div>
                     </li>
                     <li class="photo">
                         <img class="photo__item" src="./images/Ольхон.jpeg" alt="Скала на закате">
                         <div class="photo__info">
                             <h3 class="photo__description">Ольхон</h3>
-                            <button class="photo__like"></button>
+                            <button class="photo__like" type="button" aria-label="Лайк"></button>
                         </div>
                     </li>
                     <li class="photo">
                         <img class="photo__item" src="./images/Тула.jpeg" alt="Карьеры под водой">
                         <div class="photo__info">
                             <h3 class="photo__description">Тульская область</h3>
-                            <button class="photo__like"></button>
+                            <button class="photo__like" type="button" aria-label="Лайк"></button>
                         </div>
                     </li>
                     <li class="photo">
                         <img class="photo__item" src="./images/Ялта.jpeg" alt="Туманный лес">
                         <div class="photo__info">
                             <h3 class="photo__description">Ялта</h3>
-                            <button class="photo__like"></button>
+                            <button class="photo__like" type="button" aria-label="Лайк"></button>
                         </div>
                     </li>
                 </ul>
@@ -70,17 +70,17 @@
         <div class="popup">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <button class="popup__close-button"></button>
-                <form class="popup__form">
-                    <input class="popup__form popup__text popup__form_name" type="text" name="name" placeholder="Ваше имя">
-                    <input class="popup__form popup__text popup__form_about" type="text" name="about" placeholder="О себе">
-                    <button class="popup__save-button" type="submit">Сохранить</button>
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+                <form class="popup__form" name="profile-form">
+                    <input class="popup__text popup__text_type_name" type="text" name="name" placeholder="Ваше имя">
+                    <input class="popup__text popup__text_type_about" type="text" name="about" placeholder="О себе">
+                    <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
                 </form>
             </div>
-        </div>   
+        </div>
         <footer class="footer">
             <p class="footer__copyright">&copy; 2023. Дарья Жигалко</p>
         </footer>
-        <script src="./index.js"></script>
+        <script src="./scripts/index.js"></script>
     </body>
 </html>

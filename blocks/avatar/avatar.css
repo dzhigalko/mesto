@@ -1,3 +1,4 @@
 .avatar {
     max-width: 120px;
+    object-fit: cover;
 }
