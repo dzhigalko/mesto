@@ -14,9 +14,14 @@
     align-self: center;
 }
 
+.profile__button-add:hover {
+    opacity: 0.6;
+}
+
 @media screen and (max-width: 840px) {
     .profile__button-add {
         margin: auto 0;
         min-width: 282px;
+        margin-top: 36px;
     }
 }

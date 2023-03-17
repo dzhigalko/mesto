@@ -10,3 +10,7 @@
     background-color: transparent;
     cursor: pointer;
 }
+
+.photo__like:hover {
+    opacity: 0.6;
+}
