@@ -12,6 +12,7 @@
 @import url(../blocks/profile/__about/profile__about.css);
 @import url(../blocks/profile/__button-add/profile__button-add.css);
 @import url(../blocks/photos/photos.css);
+@import url(../blocks/photos/__list/photos__list.css);
 @import url(../blocks/photo-grid/photo-grid.css);
 @import url(../blocks/photo/photo.css);
 @import url(../blocks/photo/__item/photo__item.css);
