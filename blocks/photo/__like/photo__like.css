@@ -14,9 +14,3 @@
 .photo__like:hover {
     opacity: 0.5;
 }
-
-.photo__like:active {
-    background: url(../../../images/like\ active.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-}

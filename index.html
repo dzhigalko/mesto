@@ -21,60 +21,38 @@
                 <button class="profile__button-add" type="button" aria-label="Добавить"></button>
             </section>
             <section class="photos">
-                <ul class="photos__list">
-                    <li class="photo"> 
-                        <button class="photo__trash" type="button" aria-label="Удалить фото"></button>
-                        <img class="photo__item" src="./images/ингушетия.jpeg" alt="Гора на рассвете">
-                        <div class="photo__info">
-                            <h3 class="photo__description">Ингушетия</h3>
-                            <button class="photo__like" type="button" aria-label="Лайк"></button>
+                <div id="photos__list">
+                    <template class="photo__template"> 
+                        <div class="photo">
+                            <button class="photo__trash" type="button" aria-label="Удалить фото"></button>
+                            <img class="photo__item" src="" alt="">
+                            <div class="photo__info">
+                                <h3 class="photo__description"></h3>
+                                <button class="photo__like" type="button" aria-label="Лайк"></button>
+                            </div>
                         </div>
-                    </li>
-                    <li class="photo">
-                        <img class="photo__item" src="./images/иркутск.jpeg" alt="Ледяной узор">
-                        <div class="photo__info">
-                            <h3 class="photo__description">Иркутск</h3>
-                            <button class="photo__like" type="button" aria-label="Лайк"></button>
-                        </div>
-                    </li>
-                    <li class="photo">
-                        <img class="photo__item" src="./images/мурманск.jpeg" alt="Река с высоты полёта">
-                        <div class="photo__info">
-                            <h3 class="photo__description">Мурманск</h3>
-                            <button class="photo__like" type="button" aria-label="Лайк"></button>
-                        </div>
-                    </li>
-                    <li class="photo">
-                        <img class="photo__item" src="./images/ольхон.jpeg" alt="Скала на закате">
-                        <div class="photo__info">
-                            <h3 class="photo__description">Ольхон</h3>
-                            <button class="photo__like" type="button" aria-label="Лайк"></button>
-                        </div>
-                    </li>
-                    <li class="photo">
-                        <img class="photo__item" src="./images/тула.jpeg" alt="Карьеры под водой">
-                        <div class="photo__info">
-                            <h3 class="photo__description">Тульская область</h3>
-                            <button class="photo__like" type="button" aria-label="Лайк"></button>
-                        </div>
-                    </li>
-                    <li class="photo">
-                        <img class="photo__item" src="./images/ялта.jpeg" alt="Туманный лес">
-                        <div class="photo__info">
-                            <h3 class="photo__description">Ялта</h3>
-                            <button class="photo__like" type="button" aria-label="Лайк"></button>
-                        </div>
-                    </li>
-                </ul>
+                    </div>                   
+                </template>
             </section>
         </main>
-        <div class="popup">
+        <div class="popup popup__profile">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
                 <form class="popup__form" name="profile-form">
                     <input class="popup__text popup__text_type_name" type="text" name="name" placeholder="Ваше имя">
                     <input class="popup__text popup__text_type_about" type="text" name="about" placeholder="О себе">
+                    <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
+                </form>
+            </div>
+        </div>
+        <div class="popup popup__add-photo">
+            <div class="popup__container">
+                <h2 class="popup__title">Новое место</h2>
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+                <form class="popup__form" name="add-photo">
+                    <input class="popup__text popup__text_type_place" type="text" name="place" placeholder="Название">
+                    <input class="popup__text popup__text_type_link" type="url" name="link" placeholder="Ссылка на картинку">
                     <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
                 </form>
             </div>
