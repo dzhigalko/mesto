@@ -15,6 +15,7 @@
 @import url(../blocks/photos/__list/photos__list.css);
 @import url(../blocks/photo-grid/photo-grid.css);
 @import url(../blocks/photo/photo.css);
+@import url(../blocks/photo/__trash/photo__trash.css);
 @import url(../blocks/photo/__item/photo__item.css);
 @import url(../blocks/photo/__info/photo__info.css);
 @import url(../blocks/photo/__description/photo__description.css);

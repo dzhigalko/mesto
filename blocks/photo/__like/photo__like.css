@@ -1,5 +1,5 @@
 .photo__like {
-    background: url(../../../images/Like.svg);
+    background: url(../../../images/like.svg);
     background-repeat: no-repeat;
     background-position: center;
     min-width: 22px;
@@ -16,7 +16,7 @@
 }
 
 .photo__like:active {
-    background: url(../../../images/Like\ active.svg);
+    background: url(../../../images/like\ active.svg);
     background-repeat: no-repeat;
     background-position: center;
 }
