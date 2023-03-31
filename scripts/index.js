@@ -78,10 +78,12 @@ function createPhoto(place, link) {
     return photo;
 }
 
+//Добавление фото в конец
 function appendPhoto(place, link) {
     photoArea.append(createPhoto(place, link));
 }
 
+//Добавление фотов начало
 function prependPhoto(place, link) {
     photoArea.prepend(createPhoto(place, link));
 }
@@ -107,7 +109,7 @@ function onAddButtonClick() {
     popupAddPhoto.classList.add("popup_opened");
 }
 
-//Закрывание попапа добавления по крестику
+//Закрывание попапа добавления
 function onPopupCloseButtonClick(event) {
     const popup = event.target.closest(".popup");
     popup.classList.remove("popup_opened");
