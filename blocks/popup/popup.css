@@ -10,4 +10,6 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.3s, opacity 0.3s linear;
+    align-items: center;
+    justify-content: center;
 }

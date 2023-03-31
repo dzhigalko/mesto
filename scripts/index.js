@@ -44,7 +44,7 @@ const popupFigure = document.querySelector(".popup__image-full");
 
 //Константы для фото
 const photoArea = document.querySelector("#photos__list");
-const photoTemplate = document.querySelector(".photo__template");
+const photoTemplate = document.querySelector("#photo__template");
 
 //Константы для добавления фото
 const popupPlace = document.querySelector(".popup__text_type_place");
@@ -90,6 +90,7 @@ function addNewPhoto (event) {
     photoTemplate.prepend (addPhoto(popupPlace.value, popupLink.value));
     popupPlace.value = "";
     popupLink.value = "";
+    onPopupCloseButtonClick(event);
     event.preventDefault();
 }
 
@@ -101,7 +102,7 @@ function onAddButtonClick() {
     popupAddPhoto.classList.add("popup_opened");
 }
 
-//Закрывание попапа добавления по крестику В процессе
+//Закрывание попапа добавления по крестику
 function onPopupCloseButtonClick(event) {
     const popup = event.target.closest(".popup");
     popup.classList.remove("popup_opened");
@@ -124,9 +125,12 @@ function onPopupProfileFormSubmit(event) {
 }
 
 editButton.addEventListener("click", onEditButtonClick);
+
+//Закрывание попапов
 popupCloseButtons.forEach(function(button) {
     button.addEventListener("click", onPopupCloseButtonClick);
 });
+
 popupProfileForm.addEventListener("submit", onPopupProfileFormSubmit);
 addButton.addEventListener("click", onAddButtonClick); // Слушатель кнопки Добавить
 popupAddPhotoForm.addEventListener("submit", addNewPhoto);

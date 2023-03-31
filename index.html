@@ -22,7 +22,7 @@
             </section>
             <section class="photos">
                 <div id="photos__list">
-                    <template class="photo__template"> 
+                    <template id="photo__template"> 
                         <div class="photo">
                             <button class="photo__trash" type="button" aria-label="Удалить фото"></button>
                             <img class="photo__item" src="" alt="">
@@ -48,9 +48,9 @@
         </div>
         <div class="popup popup__add-photo">
             <div class="popup__container">
-                <h2 class="popup__title">Новое место</h2>              
+                <h2 class="popup__title">Новое место</h2>
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
                 <form class="popup__form popup__add-photo__form" name="add-photo">
-                    <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
                     <input class="popup__text popup__text_type_place" type="text" name="place" placeholder="Название">
                     <input class="popup__text popup__text_type_link" type="url" name="link" placeholder="Ссылка на картинку">
                     <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
@@ -58,8 +58,8 @@
             </div>
         </div>
         <div class="popup popup__image-full">
-            <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             <figure class="popup__image-container">
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
                 <img class="popup__image" src="" alt="">
                 <figcaption class="popup__image-name"></figcaption>
             </figure>
