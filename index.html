@@ -31,15 +31,15 @@
                                 <button class="photo__like" type="button" aria-label="Лайк"></button>
                             </div>
                         </div>
-                    </div>                   
-                </template>
+                    </template>                   
+                </div>
             </section>
         </main>
         <div class="popup popup__profile">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
-                <form class="popup__form" name="profile-form">
+                <form class="popup__form popup__profile__form" name="profile-form">
                     <input class="popup__text popup__text_type_name" type="text" name="name" placeholder="Ваше имя">
                     <input class="popup__text popup__text_type_about" type="text" name="about" placeholder="О себе">
                     <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
@@ -48,14 +48,21 @@
         </div>
         <div class="popup popup__add-photo">
             <div class="popup__container">
-                <h2 class="popup__title">Новое место</h2>
-                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
-                <form class="popup__form" name="add-photo">
+                <h2 class="popup__title">Новое место</h2>              
+                <form class="popup__form popup__add-photo__form" name="add-photo">
+                    <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
                     <input class="popup__text popup__text_type_place" type="text" name="place" placeholder="Название">
                     <input class="popup__text popup__text_type_link" type="url" name="link" placeholder="Ссылка на картинку">
                     <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
                 </form>
             </div>
+        </div>
+        <div class="popup popup__image-full">
+            <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+            <figure class="popup__image-container">
+                <img class="popup__image" src="" alt="">
+                <figcaption class="popup__image-name"></figcaption>
+            </figure>
         </div>
         <footer class="footer">
             <p class="footer__copyright">&copy; 2023. Дарья Жигалко</p>
