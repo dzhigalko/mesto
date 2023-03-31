@@ -1,7 +1,4 @@
 .photos {
-  /* width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box; */
     display: grid;
     gap: 20px 17px;
     grid-template-columns: repeat(auto-fit, 282px);
