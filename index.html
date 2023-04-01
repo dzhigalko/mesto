@@ -24,7 +24,7 @@
                 <template id="photo__template"> 
                     <div class="photo">
                         <button class="photo__trash" type="button" aria-label="Удалить фото"></button>
-                        <img class="photo__item" src="#" alt="#">
+                        <img class="photo__item" src="#" alt="">
                         <div class="photo__info">
                             <h3 class="photo__description"></h3>
                             <button class="photo__like" type="button" aria-label="Лайк"></button>
@@ -36,7 +36,7 @@
         <div class="popup popup_type_profile">
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+                <button class="popup__close-button popup__close-button_type_profile" type="button" aria-label="Закрыть"></button>
                 <form class="popup__form popup__profile-form" name="profile-form">
                     <input class="popup__text popup__text_type_name" type="text" name="name" placeholder="Ваше имя">
                     <input class="popup__text popup__text_type_about" type="text" name="about" placeholder="О себе">
@@ -47,7 +47,7 @@
         <div class="popup popup_type_add-photo">
             <div class="popup__container">
                 <h2 class="popup__title">Новое место</h2>
-                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+                <button class="popup__close-button popup__close-button_type_add-photo" type="button" aria-label="Закрыть"></button>
                 <form class="popup__form popup__add-photo-form" name="add-photo">
                     <input class="popup__text popup__text_type_place" type="text" name="place" placeholder="Название">
                     <input class="popup__text popup__text_type_link" type="url" name="link" placeholder="Ссылка на картинку">
@@ -57,14 +57,15 @@
         </div>
         <div class="popup popup_type_image-full">
             <figure class="popup__image-container">
-                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
-                <img class="popup__image" src="#" alt="#">
+                <button class="popup__close-button popup__close-button_type_image-full" type="button" aria-label="Закрыть"></button>
+                <img class="popup__image" src="#" alt="">
                 <figcaption class="popup__image-name"></figcaption>
             </figure>
         </div>
         <footer class="footer">
             <p class="footer__copyright">&copy; 2023. Дарья Жигалко</p>
         </footer>
+        <script src="./scripts/constants.js"></script>
         <script src="./scripts/index.js"></script>
     </body>
 </html>
