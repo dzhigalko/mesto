@@ -2,30 +2,30 @@ const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 
 const popup = document.querySelector(".popup");
-
 const popupFigure = document.querySelector(".popup_type_image-full");
 const popupProfile = document.querySelector(".popup_type_profile");
 const popupAddPhoto = document.querySelector(".popup_type_add-photo");
 
-const popupNameInput = document.querySelector(".popup__text_type_name");
-const popupAboutInput = document.querySelector(".popup__text_type_about");
 const popupImage = document.querySelector(".popup__image");
 const popupImageName = document.querySelector(".popup__image-name");
 
-const popupProfileForm = document.querySelector(".popup__profile-form");
-const popupAddPhotoForm = document.querySelector(".popup__add-photo-form");
+const profileForm = document.forms.profile; // форма профиля
+const inputName = profileForm.elements.name; //инпут "ФИО"
+const inputAbout = profileForm.elements.about; //инпут "о себе"
+const photoForm = document.forms.photo; //форма добавления фото
+const inputPlace = photoForm.elements["place-title"]; //инпут названия места
+const inputLink = photoForm.elements.link; //инпут ссылки на фото
 
 const photoArea = document.querySelector(".photos");
 const photoTemplate = document.querySelector("#photo__template");
-
-const popupPlace = document.querySelector(".popup__text_type_place");
-const popupLink = document.querySelector(".popup__text_type_link");
 
 const buttonOpenAddCardPopup = document.querySelector(".profile__button-add");
 const buttonOpenEditProfilePopup = document.querySelector(".profile__button-edit");
 const buttonCloseAddCardPopup = document.querySelector(".popup__close-button_type_add-photo");
 const buttonCloseEditProfilePopup = document.querySelector(".popup__close-button_type_profile");
 const buttonCloseFigurePopup = document.querySelector(".popup__close-button_type_image-full");
+const submitButton = document.querySelector(".popup__button"); //кнопка сохранить формы профиля
+
 
 //Блок фото
 function createPhoto(place, link) {
@@ -76,9 +76,8 @@ function prependPhoto(place, link) {
 
 //Добавление нового фото
 function addNewPhoto (event) {
-    prependPhoto(popupPlace.value, popupLink.value);
-    popupPlace.value = "";
-    popupLink.value = "";
+    prependPhoto(inputPlace.value, inputLink.value);
+    photoForm.reset();
     closePopup(popupAddPhoto);
     event.preventDefault();
 }
@@ -90,8 +89,8 @@ function openPopup (popup) {
 
 // Открывание попапа Редактирования профиля c сохранение данных в полях ввода
 function onButtonOpenEditProfilePopupClick() {
-    popupNameInput.value = profileName.textContent;
-    popupAboutInput.value = profileAbout.textContent;
+    inputName.value = profileName.textContent;
+    inputAbout.value = profileAbout.textContent;
     openPopup(popupProfile);
 }
 
@@ -121,15 +120,45 @@ function onButtonCloseFigurePopupClick() {
 }
 
 //Сохранение пользовательских данных только на странице по кнопке сохранить
-function onPopupProfileFormSubmit(event) {
-    profileName.textContent = popupNameInput.value;
-    profileAbout.textContent = popupAboutInput.value;
-    closePopup(popupProfile);
+function onProfileFormSubmit(event) {
+    profileName.textContent = inputName.value;
+    profileAbout.textContent = inputAbout.value;
+    closePopup(popupProfile); 
     event.preventDefault();
 }
 
-popupProfileForm.addEventListener("submit", onPopupProfileFormSubmit);
-popupAddPhotoForm.addEventListener("submit", addNewPhoto);
+//отвечавет за состояние кнопки Сохранить//
+function setSubmitButtonState(isFormValid) {
+    if (isFormValid) {
+        submitButton.removeAttribute('disabled');
+        submitButton.classList.remove("popup__button_disabled");
+    } else {
+        submitButton.setAttribute('disabled', true);
+        submitButton.classList.add("popup__button_disabled");
+    }
+}
+
+//смотрит сколько символов в инпутах формы профиля//
+profileForm.addEventListener('input', function(event) {
+    const isValid = inputName.value.length > 0 && inputAbout.value.length > 0;
+    setSubmitButtonState(isValid);
+});
+
+
+//закрытие по клику на оверлэй//
+function closePopupByClickOnOverlay(popup) {
+    popup.addEventListener("mousedown", function(event) {
+      if (event.target === popup) {
+        closePopup(popup);
+      }
+    });
+  }
+
+  closePopupByClickOnOverlay(popupProfile);
+
+
+profileForm.addEventListener("submit", onProfileFormSubmit);
+photoForm.addEventListener("submit", addNewPhoto);
 
 buttonOpenAddCardPopup.addEventListener("click", onButtonOpenAddCardPopup); //Открывает попап добавления фото
 buttonOpenEditProfilePopup.addEventListener("click", onButtonOpenEditProfilePopupClick); // Открывание попапа Редактирования профиля
