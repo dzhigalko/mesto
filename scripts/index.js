@@ -1,7 +1,7 @@
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 
-const popup = document.querySelector(".popup");
+const popupList = document.querySelector(".popup");
 const popupFigure = document.querySelector(".popup_type_image-full");
 const popupProfile = document.querySelector(".popup_type_profile");
 const popupAddPhoto = document.querySelector(".popup_type_add-photo");
@@ -138,24 +138,38 @@ function setSubmitButtonState(isFormValid) {
     }
 }
 
-//смотрит сколько символов в инпутах формы профиля//
-profileForm.addEventListener('input', function(event) {
-    const isValid = inputName.value.length > 0 && inputAbout.value.length > 0;
-    setSubmitButtonState(isValid);
-});
+// //смотрит сколько символов в инпутах формы профиля//
+// profileForm.addEventListener('input', function(event) {
+//     const isValid = inputName.value.length > 0 && inputAbout.value.length > 0;
+//     setSubmitButtonState(isValid);
+// });
 
 
 //закрытие по клику на оверлэй//
-function closePopupByClickOnOverlay(popup) {
+function closePopupByClickOutside(popup) {
     popup.addEventListener("mousedown", function(event) {
-      if (event.target === popup) {
-        closePopup(popup);
-      }
+        if (event.target === popup) {
+            closePopup(popup);
+        }
     });
-  }
+}
 
-  closePopupByClickOnOverlay(popupProfile);
+//закрытие попапа по Esc
+function closePopupByEscape(popup) {
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closePopup(popup);
+        }
+    })
+}
 
+closePopupByClickOutside(popupAddPhoto);
+closePopupByClickOutside(popupProfile);
+closePopupByClickOutside(popupFigure);
+
+closePopupByEscape(popupAddPhoto);
+closePopupByEscape(popupProfile);
+closePopupByEscape(popupFigure);
 
 profileForm.addEventListener("submit", onProfileFormSubmit);
 photoForm.addEventListener("submit", addNewPhoto);
