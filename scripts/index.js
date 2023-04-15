@@ -54,7 +54,6 @@ function createPhoto(place, link) {
         popupImage.src = link;
         popupImageName.textContent = place;
         popupImage.alt = place;  //alt прописывает
-        closePopupByEscape(popupFigure);
         openPopup(popupFigure); //открывает попап фул фото
     });
 
@@ -85,6 +84,7 @@ function addNewPhoto (event) {
 
 //Открывание попапов общая
 function openPopup (popup) {
+    document.addEventListener('keydown', closeByEscape);
     popup.classList.add("popup_opened");
 }
 
@@ -93,7 +93,6 @@ function onButtonOpenEditProfilePopupClick() {
     inputName.value = profileName.textContent;
     inputAbout.value = profileAbout.textContent;
     resetPopupFormValidation(popupProfile);
-    closePopupByEscape(popupProfile);
     openPopup(popupProfile);
 }
 
@@ -101,13 +100,13 @@ function onButtonOpenEditProfilePopupClick() {
 function onButtonOpenAddCardPopup() {
     photoForm.reset();
     resetPopupFormValidation(popupAddPhoto);
-    closePopupByEscape(popupAddPhoto);
     openPopup(popupAddPhoto);
 }
 
 // Закрывание попапов общая
 function closePopup(popup) {
     popup.classList.remove("popup_opened");
+    document.removeEventListener('keydown', closeByEscape);
 }
 
 //закрывает попап добавления фото 
@@ -154,18 +153,18 @@ function closePopupByClickOutside(popup) {
     });
 }
 
+//закрытие попапа по Esc
+function closeByEscape(event) {
+    if (event.key === 'Escape') {
+        const popup = document.querySelector(".popup_opened");
+        closePopup(popup);
+    }
+}
+
 closePopupByClickOutside(popupAddPhoto);
 closePopupByClickOutside(popupProfile);
 closePopupByClickOutside(popupFigure);
 
-//закрытие попапа по Esc
-function closePopupByEscape(popup) {
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            closePopup(popup);
-        }
-    })
-}
 
 profileForm.addEventListener("submit", onProfileFormSubmit);
 photoForm.addEventListener("submit", addNewPhoto);
