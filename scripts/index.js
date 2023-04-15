@@ -92,11 +92,13 @@ function onButtonOpenEditProfilePopupClick() {
     inputName.value = profileName.textContent;
     inputAbout.value = profileAbout.textContent;
     openPopup(popupProfile);
+    resetPopupForm(popupProfile);
 }
 
 // Открывание попапа Добавления фото
 function onButtonOpenAddCardPopup() {
     openPopup(popupAddPhoto);
+    resetPopupForm(popupAddPhoto);
 }
 
 // Закрывание попапов общая
@@ -138,12 +140,6 @@ function setSubmitButtonState(isFormValid) {
     }
 }
 
-// //смотрит сколько символов в инпутах формы профиля//
-// profileForm.addEventListener('input', function(event) {
-//     const isValid = inputName.value.length > 0 && inputAbout.value.length > 0;
-//     setSubmitButtonState(isValid);
-// });
-
 
 //закрытие по клику на оверлэй//
 function closePopupByClickOutside(popup) {
@@ -154,6 +150,10 @@ function closePopupByClickOutside(popup) {
     });
 }
 
+closePopupByClickOutside(popupAddPhoto);
+closePopupByClickOutside(popupProfile);
+closePopupByClickOutside(popupFigure);
+
 //закрытие попапа по Esc
 function closePopupByEscape(popup) {
     document.addEventListener('keydown', function(event) {
@@ -162,10 +162,6 @@ function closePopupByEscape(popup) {
         }
     })
 }
-
-closePopupByClickOutside(popupAddPhoto);
-closePopupByClickOutside(popupProfile);
-closePopupByClickOutside(popupFigure);
 
 closePopupByEscape(popupAddPhoto);
 closePopupByEscape(popupProfile);
