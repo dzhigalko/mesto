@@ -8,9 +8,8 @@ const validationConfig = {  //объект с набором ключей
 };
 
 //проверяется валидность инпута
-function checkInputValidity(form, input, {errorClass, inputErrorClass}) {
+function checkInputValidity(isInputValid, form, input, {errorClass, inputErrorClass}) {
     const currentInputErrorContainer = form.querySelector(`#${input.name}-error`);
-    const isInputValid = input.checkValidity();
 
     if (isInputValid) {
         currentInputErrorContainer.textContent = "";
@@ -50,7 +49,8 @@ function setEventListeners(form, validationConfig) {
 
     formInputs.forEach(function(input) {
         input.addEventListener("input", () => {
-            checkInputValidity(form, input, validationConfig);
+            const isInputValid = input.checkValidity();
+            checkInputValidity(isInputValid, form, input, validationConfig);
             checkFormValidity(form, validationConfig);
        }); 
     });
@@ -67,12 +67,12 @@ function enableValidation(validationConfig) {
 }
 
 //сбрасывает валиацию для формы попапа
-function resetPopupForm(popup) {
+function resetPopupFormValidation(popup) {
     const form = popup.querySelector(validationConfig.formSelector);
     const formInputs = Array.from(form.querySelectorAll(validationConfig.inputSelector));
 
     formInputs.forEach(function(input) {
-        checkInputValidity(form, input, validationConfig);
+        checkInputValidity(true, form, input, validationConfig);
     });
 
     checkFormValidity(form, validationConfig);

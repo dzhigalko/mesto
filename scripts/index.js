@@ -54,6 +54,7 @@ function createPhoto(place, link) {
         popupImage.src = link;
         popupImageName.textContent = place;
         popupImage.alt = place;  //alt прописывает
+        closePopupByEscape(popupFigure);
         openPopup(popupFigure); //открывает попап фул фото
     });
 
@@ -91,14 +92,17 @@ function openPopup (popup) {
 function onButtonOpenEditProfilePopupClick() {
     inputName.value = profileName.textContent;
     inputAbout.value = profileAbout.textContent;
+    resetPopupFormValidation(popupProfile);
+    closePopupByEscape(popupProfile);
     openPopup(popupProfile);
-    resetPopupForm(popupProfile);
 }
 
 // Открывание попапа Добавления фото
 function onButtonOpenAddCardPopup() {
+    photoForm.reset();
+    resetPopupFormValidation(popupAddPhoto);
+    closePopupByEscape(popupAddPhoto);
     openPopup(popupAddPhoto);
-    resetPopupForm(popupAddPhoto);
 }
 
 // Закрывание попапов общая
@@ -162,10 +166,6 @@ function closePopupByEscape(popup) {
         }
     })
 }
-
-closePopupByEscape(popupAddPhoto);
-closePopupByEscape(popupProfile);
-closePopupByEscape(popupFigure);
 
 profileForm.addEventListener("submit", onProfileFormSubmit);
 photoForm.addEventListener("submit", addNewPhoto);
