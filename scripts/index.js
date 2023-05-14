@@ -1,7 +1,10 @@
+import Card from "./Card.js"
+import { resetPopupFormValidation, enableValidation, validationConfig } from "./validate.js";
+import { initialCards } from "./constants.js";
+
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 
-const popupList = document.querySelector(".popup");
 const popupFigure = document.querySelector(".popup_type_image-full");
 const popupProfile = document.querySelector(".popup_type_profile");
 const popupAddPhoto = document.querySelector(".popup_type_add-photo");
@@ -17,7 +20,7 @@ const inputPlace = photoForm.elements["place-title"]; //инпут назван�
 const inputLink = photoForm.elements.link; //инпут ссылки на фото
 
 const photoArea = document.querySelector(".photos");
-const photoTemplate = document.querySelector("#photo__template");
+const photoTemplateSelector = "#photo__template";
 
 const buttonOpenAddCardPopup = document.querySelector(".profile__button-add");
 const buttonOpenEditProfilePopup = document.querySelector(".profile__button-edit");
@@ -27,35 +30,17 @@ const buttonCloseFigurePopup = document.querySelector(".popup__close-button_type
 const submitButton = document.querySelector(".popup__button"); //кнопка сохранить формы профиля
 
 
+function createFigurePopupHandler(link, place) {
+    popupImage.src = link;
+    popupImage.alt = place;  //alt прописывает
+    popupImageName.textContent = place;
+    openPopup(popupFigure); //открывает попап фул фото
+}
+
 //Блок фото
 function createPhoto(place, link) {
-    const photo = photoTemplate.content.cloneNode(true);
-    const photoImage = photo.querySelector(".photo__item");
-    const photoPlace = photo.querySelector(".photo__description");
-    const likeButton = photo.querySelector(".photo__like");
-    const trashButton = photo.querySelector(".photo__trash");
-
-    photoImage.src = link;
-    photoPlace.textContent = place;
-    photoImage.alt = place;
-
-    // Лайк
-    likeButton.addEventListener("click", function() {
-        likeButton.classList.toggle("photo__like_active");
-    });
-
-    // Удаление фото
-    trashButton.addEventListener("click", function(event) {
-        const photo = event.target.closest(".photo");
-        photo.remove();
-    });
-
-    photoImage.addEventListener("click", function(event) {
-        popupImage.src = link;
-        popupImageName.textContent = place;
-        popupImage.alt = place;  //alt прописывает
-        openPopup(popupFigure); //открывает попап фул фото
-    });
+    const card = new Card(link, place, photoTemplateSelector, createFigurePopupHandler);
+    const photo = card.createElement();
 
     return photo;
 }
@@ -100,6 +85,7 @@ function onButtonOpenEditProfilePopupClick() {
 function onButtonOpenAddCardPopup() {
     photoForm.reset();
     resetPopupFormValidation(popupAddPhoto);
+
     openPopup(popupAddPhoto);
 }
 
@@ -130,17 +116,6 @@ function onProfileFormSubmit(event) {
     profileAbout.textContent = inputAbout.value;
     closePopup(popupProfile); 
     event.preventDefault();
-}
-
-//отвечавет за состояние кнопки Сохранить//
-function setSubmitButtonState(isFormValid) {
-    if (isFormValid) {
-        submitButton.removeAttribute('disabled');
-        submitButton.classList.remove("popup__button_disabled");
-    } else {
-        submitButton.setAttribute('disabled', true);
-        submitButton.classList.add("popup__button_disabled");
-    }
 }
 
 
@@ -175,3 +150,4 @@ buttonOpenEditProfilePopup.addEventListener("click", onButtonOpenEditProfilePopu
 buttonCloseAddCardPopup.addEventListener("click", onButtonCloseAddCardPopupClick); //Закрывает попап добавления фото
 buttonCloseEditProfilePopup.addEventListener("click", onButtonCloseEditProfilePopupClick);
 buttonCloseFigurePopup.addEventListener("click", onButtonCloseFigurePopupClick);
+enableValidation(validationConfig);

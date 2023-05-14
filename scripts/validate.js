@@ -1,4 +1,6 @@
-const validationConfig = {  //объект с набором ключей
+import FormValidator from "./FormValidator.js";
+
+export const validationConfig = {  //объект с набором ключей
     formSelector: '.popup__form', //формы
     inputSelector: '.popup__input',  //инпуты
     submitButtonSelector: '.popup__button',  //кнопки сохранить
@@ -7,76 +9,21 @@ const validationConfig = {  //объект с набором ключей
     errorClass: 'popup__error_visible' //span
 };
 
-//проверяется валидность инпута
-function checkInputValidity(isInputValid, form, input, {errorClass, inputErrorClass}) {
-    const currentInputErrorContainer = form.querySelector(`#${input.name}-error`);
-
-    if (isInputValid) {
-        currentInputErrorContainer.textContent = "";
-        input.classList.remove(inputErrorClass);
-        currentInputErrorContainer.classList.remove(errorClass);
-    } else {
-        currentInputErrorContainer.textContent = input.validationMessage;
-        input.classList.add(inputErrorClass);
-        currentInputErrorContainer.classList.add(errorClass);
-    }
-}
-
-//возвращает валидны ли все поля в форме
-function hasInvalidInput(formInputs) {
-    return formInputs.some(item => !item.validity.valid)
-}
-
-//проверяется валидность всех инпутов в форме
-function checkFormValidity(form, {inactiveButtonClass, inputSelector, submitButtonSelector}) {
-    const formInputs = Array.from(form.querySelectorAll(inputSelector));
-    const formButton = form.querySelector(submitButtonSelector);
-    const formHasInvalidInputs = hasInvalidInput(formInputs);
-
-    if (formHasInvalidInputs) {
-        formButton.classList.add(inactiveButtonClass);
-        formButton.setAttribute("disabled", "");
-    } else {
-        formButton.classList.remove(inactiveButtonClass);
-        formButton.removeAttribute("disabled");
-    }
-}
-
-//устанавливает обработчики для валидации всех инпутов в форме
-function setEventListeners(form, validationConfig) {
-    const { inputSelector } = validationConfig;
-    const formInputs = Array.from(form.querySelectorAll(inputSelector));
-
-    formInputs.forEach(function(input) {
-        input.addEventListener("input", () => {
-            const isInputValid = input.checkValidity();
-            checkInputValidity(isInputValid, form, input, validationConfig);
-            checkFormValidity(form, validationConfig);
-       }); 
-    });
-}
-
 //добавляет валидацию на все формы
-function enableValidation(validationConfig) {
-    const { formSelector } = validationConfig;
+export function enableValidation(validationConfig) {
+    const { formSelector, ...config } = validationConfig;
     const forms = Array.from(document.querySelectorAll(formSelector));
 
     forms.forEach(function(form) {
-        setEventListeners(form, validationConfig);
+        const validator = new FormValidator(form, config);
+        validator.enableValidation();
     })
 }
 
 //сбрасывает валиацию для формы попапа
-function resetPopupFormValidation(popup) {
+export function resetPopupFormValidation(popup) {
     const form = popup.querySelector(validationConfig.formSelector);
-    const formInputs = Array.from(form.querySelectorAll(validationConfig.inputSelector));
-
-    formInputs.forEach(function(input) {
-        checkInputValidity(true, form, input, validationConfig);
-    });
-
-    checkFormValidity(form, validationConfig);
+    const validator = new FormValidator(form, validationConfig);
+    validator.resetValidation();
 }
-
-enableValidation(validationConfig);
     
