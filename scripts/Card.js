@@ -1,57 +1,49 @@
 export default class Card {
-    constructor(link, place, templateSelector, createFigurePopupHandler) {
+    constructor(link, place, templateSelector, handleImageClick) {
         this._link = link;
         this._place = place;
         this._templateSelector = templateSelector;
-        this._createFigurePopupHandler = createFigurePopupHandler;
+        this._handleImageClick = handleImageClick;
+
+        const photoTemplate = document.querySelector(this._templateSelector);
+        this._cardElement = photoTemplate.content.cloneNode(true);
+        this._photoImage = this._cardElement.querySelector(".photo__item");
+        this._photoPlace = this._cardElement.querySelector(".photo__description");
+        this._likeButton = this._cardElement.querySelector(".photo__like");
+        this._trashButton = this._cardElement.querySelector(".photo__trash");
     }
 
     createElement() {
-        const photoTemplate = document.querySelector(this._templateSelector);
-        const photo = photoTemplate.content.cloneNode(true);
-        const photoImage = photo.querySelector(".photo__item");
-        const photoPlace = photo.querySelector(".photo__description");
-    
-        photoImage.src = this._link;
-        photoImage.alt = this._place;
-        photoPlace.textContent = this._place;
+        this._photoImage.src = this._link;
+        this._photoImage.alt = this._place;
+        this._photoPlace.textContent = this._place;
 
-        this._addEventListeners(photo);
+        this._addEventListeners();
     
-        return photo;
+        return this._cardElement;
     }
 
     _addEventListeners(photo) {
-        const likeButton = photo.querySelector(".photo__like");
-        const trashButton = photo.querySelector(".photo__trash");
-        const photoImage = photo.querySelector(".photo__item");
-
         // Лайк
-        likeButton.addEventListener("click", this._getLikeButtonClickListener(likeButton));
+        this._likeButton.addEventListener("click", this._handleLikeButtonClick);
         // Удаление фото
-        trashButton.addEventListener("click", this._getTrashButtonEventListener());
+        this._trashButton.addEventListener("click", this._handleTrashButtonClick);
         // Поп ап картинки
-        photoImage.addEventListener("click", this._getPhotoImageEventListener());
+        this._photoImage.addEventListener("click", this._getImageClickHandler());
     }
 
-    _getLikeButtonClickListener(likeButton) {
-        return function() {
-            likeButton.classList.toggle("photo__like_active");
-        }
+    _handleLikeButtonClick() {
+        this.classList.toggle("photo__like_active");
     }
 
-    _getTrashButtonEventListener() {
-        return function(event) {
-            const photo = event.target.closest(".photo");
-            photo.remove();
-        }
+    _handleTrashButtonClick(event) {
+        const photo = event.target.closest(".photo");
+        photo.remove();
     }
 
-    _getPhotoImageEventListener() {
-        const card = this;
-
-        return function() {
-            card._createFigurePopupHandler(card._link, card._place);
+    _getImageClickHandler() {
+        return () => {
+            this._handleImageClick(this._link, this._place);
         }
     }
 }

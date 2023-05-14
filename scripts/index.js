@@ -5,6 +5,7 @@ import { initialCards } from "./constants.js";
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 
+const popupList = document.querySelectorAll(".popup");
 const popupFigure = document.querySelector(".popup_type_image-full");
 const popupProfile = document.querySelector(".popup_type_profile");
 const popupAddPhoto = document.querySelector(".popup_type_add-photo");
@@ -24,13 +25,9 @@ const photoTemplateSelector = "#photo__template";
 
 const buttonOpenAddCardPopup = document.querySelector(".profile__button-add");
 const buttonOpenEditProfilePopup = document.querySelector(".profile__button-edit");
-const buttonCloseAddCardPopup = document.querySelector(".popup__close-button_type_add-photo");
-const buttonCloseEditProfilePopup = document.querySelector(".popup__close-button_type_profile");
-const buttonCloseFigurePopup = document.querySelector(".popup__close-button_type_image-full");
-const submitButton = document.querySelector(".popup__button"); //кнопка сохранить формы профиля
 
 
-function createFigurePopupHandler(link, place) {
+function handleImageClick(link, place) {
     popupImage.src = link;
     popupImage.alt = place;  //alt прописывает
     popupImageName.textContent = place;
@@ -39,7 +36,7 @@ function createFigurePopupHandler(link, place) {
 
 //Блок фото
 function createPhoto(place, link) {
-    const card = new Card(link, place, photoTemplateSelector, createFigurePopupHandler);
+    const card = new Card(link, place, photoTemplateSelector, handleImageClick);
     const photo = card.createElement();
 
     return photo;
@@ -74,7 +71,7 @@ function openPopup (popup) {
 }
 
 // Открывание попапа Редактирования профиля c сохранение данных в полях ввода
-function onButtonOpenEditProfilePopupClick() {
+function handleButtonOpenEditProfilePopupClick() {
     inputName.value = profileName.textContent;
     inputAbout.value = profileAbout.textContent;
     resetPopupFormValidation(popupProfile);
@@ -82,7 +79,7 @@ function onButtonOpenEditProfilePopupClick() {
 }
 
 // Открывание попапа Добавления фото
-function onButtonOpenAddCardPopup() {
+function handleButtonOpenAddCardPopup() {
     photoForm.reset();
     resetPopupFormValidation(popupAddPhoto);
 
@@ -95,23 +92,8 @@ function closePopup(popup) {
     document.removeEventListener('keydown', closeByEscape);
 }
 
-//закрывает попап добавления фото 
-function onButtonCloseAddCardPopupClick() {
-    closePopup(popupAddPhoto);
-}
-
-//закрывает попап редактирования профиля
-function onButtonCloseEditProfilePopupClick() {
-    closePopup(popupProfile);
-}
-
-//Закрывает попап фулл фото
-function onButtonCloseFigurePopupClick() {
-    closePopup(popupFigure);
-}
-
 //Сохранение пользовательских данных только на странице по кнопке сохранить
-function onProfileFormSubmit(event) {
+function handleProfileFormSubmit(event) {
     profileName.textContent = inputName.value;
     profileAbout.textContent = inputAbout.value;
     closePopup(popupProfile); 
@@ -136,18 +118,19 @@ function closeByEscape(event) {
     }
 }
 
-closePopupByClickOutside(popupAddPhoto);
-closePopupByClickOutside(popupProfile);
-closePopupByClickOutside(popupFigure);
+popupList.forEach((popup) => {
+    closePopupByClickOutside(popup);
 
+    const closeButton = popup.querySelector(".popup__close-button")
+    closeButton.addEventListener("click", () => {
+        closePopup(popup);
+    });
+})
 
-profileForm.addEventListener("submit", onProfileFormSubmit);
+profileForm.addEventListener("submit", handleProfileFormSubmit);
 photoForm.addEventListener("submit", addNewPhoto);
 
-buttonOpenAddCardPopup.addEventListener("click", onButtonOpenAddCardPopup); //Открывает попап добавления фото
-buttonOpenEditProfilePopup.addEventListener("click", onButtonOpenEditProfilePopupClick); // Открывание попапа Редактирования профиля
+buttonOpenAddCardPopup.addEventListener("click", handleButtonOpenAddCardPopup); //Открывает попап добавления фото
+buttonOpenEditProfilePopup.addEventListener("click", handleButtonOpenEditProfilePopupClick); // Открывание попапа Редактирования профиля
 
-buttonCloseAddCardPopup.addEventListener("click", onButtonCloseAddCardPopupClick); //Закрывает попап добавления фото
-buttonCloseEditProfilePopup.addEventListener("click", onButtonCloseEditProfilePopupClick);
-buttonCloseFigurePopup.addEventListener("click", onButtonCloseFigurePopupClick);
 enableValidation(validationConfig);

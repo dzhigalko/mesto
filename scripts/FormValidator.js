@@ -6,6 +6,8 @@ export default class FormValidator {
         this._inactiveButtonClass = validationConfig.inactiveButtonClass,  //неактивная кнопка сохранить
         this._inputErrorClass = validationConfig.inputErrorClass, //красное подчеркивание инпута
         this._errorClass = validationConfig.errorClass //span
+        this.formInputs = Array.from(this._form.querySelectorAll(this._inputSelector));
+        this.formButton = this._form.querySelector(this._submitButtonSelector);
     }
 
     _setInputValid(input) {
@@ -37,33 +39,27 @@ export default class FormValidator {
     
     //проверяется валидность всех инпутов в форме
     _checkFormValidity() {
-        const formInputs = Array.from(this._form.querySelectorAll(this._inputSelector));
-        const formButton = this._form.querySelector(this._submitButtonSelector);
-        const formHasInvalidInputs = this._hasInvalidInput(formInputs);
+        const formHasInvalidInputs = this.formInputs.some(item => !item.validity.valid)
     
         if (formHasInvalidInputs) {
-            formButton.classList.add(this._inactiveButtonClass);
-            formButton.setAttribute("disabled", "");
+            this.formButton.classList.add(this._inactiveButtonClass);
+            this.formButton.setAttribute("disabled", "");
         } else {
-            formButton.classList.remove(this._inactiveButtonClass);
-            formButton.removeAttribute("disabled");
+            this.formButton.classList.remove(this._inactiveButtonClass);
+            this.formButton.removeAttribute("disabled");
         }
     }
 
     _getInputEventListener(input) {
-        const form = this;
-
-        return function() {
-            form._checkInputValidity(input);
-            form._checkFormValidity();
+        return () => {
+            this._checkInputValidity(input);
+            this._checkFormValidity();
         }
     }
 
     //устанавливает обработчики для валидации всех инпутов в форме
     _addEventListeners() {
-        const formInputs = Array.from(this._form.querySelectorAll(this._inputSelector));
-    
-        formInputs.forEach((input) => {
+        this.formInputs.forEach((input) => {
             input.addEventListener("input", this._getInputEventListener(input)); 
         });
     }
@@ -73,9 +69,7 @@ export default class FormValidator {
     }
 
     resetValidation() {
-        const formInputs = Array.from(this._form.querySelectorAll(this._inputSelector));
-
-        formInputs.forEach((input) => {
+        this.formInputs.forEach((input) => {
             this._setInputValid(input);
         });
     

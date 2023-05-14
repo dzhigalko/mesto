@@ -1,5 +1,7 @@
 import FormValidator from "./FormValidator.js";
 
+const formValidators = {};
+
 export const validationConfig = {  //объект с набором ключей
     formSelector: '.popup__form', //формы
     inputSelector: '.popup__input',  //инпуты
@@ -17,13 +19,15 @@ export function enableValidation(validationConfig) {
     forms.forEach(function(form) {
         const validator = new FormValidator(form, config);
         validator.enableValidation();
+
+        formValidators[form.name] = validator;
     })
 }
 
 //сбрасывает валиацию для формы попапа
 export function resetPopupFormValidation(popup) {
-    const form = popup.querySelector(validationConfig.formSelector);
-    const validator = new FormValidator(form, validationConfig);
+    const form = popup.querySelector("form");
+    const validator = formValidators[form.name];
     validator.resetValidation();
 }
     
