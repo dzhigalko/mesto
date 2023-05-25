@@ -23,7 +23,7 @@ export default class Card {
         return this._cardElement;
     }
 
-    _addEventListeners(photo) {
+    _addEventListeners() {
         // Лайк
         this._likeButton.addEventListener("click", this._handleLikeButtonClick);
         // Удаление фото
