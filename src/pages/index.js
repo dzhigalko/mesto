@@ -1,28 +1,26 @@
-import "./styles/pages/index.css";
-import Card from "./scripts/Card.js"
-import Section from "./scripts/Section.js";
-import PopupWithImage from "./scripts/PopupWithImage.js";
-import PopupWithForm from "./scripts/PopupWithForm.js";
-import UserInfo from "./scripts/UserInfo.js";
-import { enableValidation, validationConfig } from "./scripts/validate.js";
-import { initialCards } from "./scripts/constants.js";
-
-const nameSelector = ".profile__name";
-const aboutSelector = ".profile__about";
-
-const fullImagePopupSelector = ".popup_type_image-full";
-const profilePopupSelector = ".popup_type_profile";
-const addPhotoPopupSelector = ".popup_type_add-photo";
-
-const profileForm = document.forms.profile; // форма профиля
-const inputName = profileForm.elements.name; //инпут "ФИО"
-const inputAbout = profileForm.elements.about; //инпут "о себе"
-
-const photoAreaSelector = ".photos";
-const photoTemplateSelector = "#photo__template";
-
-const buttonOpenAddCardPopup = document.querySelector(".profile__button-add");
-const buttonOpenEditProfilePopup = document.querySelector(".profile__button-edit");
+import "../pages/index.css";
+import Card from "../components/Card.js"
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import { 
+    enableValidation,
+    resetPopupFormValidation
+} from "../utils/validate.js";
+import { 
+    initialCards,
+    nameSelector,
+    aboutSelector,
+    fullImagePopupSelector,
+    profilePopupSelector,
+    addPhotoPopupSelector,
+    photoAreaSelector,
+    photoTemplateSelector,
+    buttonOpenAddCardPopup,
+    buttonOpenEditProfilePopup,
+    validationConfig
+ } from "../utils/constants.js";
 
 const fullImagePopup = new PopupWithImage(fullImagePopupSelector);
 const userInfo = new UserInfo(nameSelector, aboutSelector);
@@ -31,15 +29,15 @@ const profilePopup = new PopupWithForm(profilePopupSelector, (values) => {
     const { name, about } = values;
     
     userInfo.setUserInfo(name, about);
-});
+}, resetPopupFormValidation);
 const addPhotoPopup = new PopupWithForm(addPhotoPopupSelector, (values) => {
     const { place, link } = values;
 
     cardsSection.addItem(cardRenderer({ place: place, link: link }), true)
-});
+}, resetPopupFormValidation);
 
 const cardRenderer = item => {
-    const { name: place, link } = item;
+    const { place, link } = item;
 
     const card = new Card(link, place, photoTemplateSelector, (link, place) => {
         fullImagePopup.open(place, link);
@@ -52,13 +50,11 @@ const cardRenderer = item => {
 const cardsSection = new Section({ items: initialCards, renderer: cardRenderer }, photoAreaSelector);
 cardsSection.render();
 
-
 // Открывание попапа Редактирования профиля c сохранение данных в полях ввода
 function handleButtonOpenEditProfilePopupClick() {
     const { name, about } = userInfo.getUserInfo();
     
-    inputName.value = name;
-    inputAbout.value = about;
+    profilePopup.setInputValues({name, about});
     profilePopup.open();
 }
 
