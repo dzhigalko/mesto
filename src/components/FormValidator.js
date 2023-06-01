@@ -11,7 +11,7 @@ export default class FormValidator {
     }
 
     _setInputValid(input) {
-        const currentInputErrorContainer = this._form.querySelector(`#${input.name}-error`);
+        const currentInputErrorContainer = this._form.querySelector(`[name="${input.name}-error"]`);
 
         input.classList.remove(this._inputErrorClass);
         currentInputErrorContainer.textContent = "";
@@ -21,7 +21,7 @@ export default class FormValidator {
     //проверяется валидность инпута
     _checkInputValidity(input) {
         const isInputValid = input.checkValidity();
-        const currentInputErrorContainer = this._form.querySelector(`#${input.name}-error`);
+        const currentInputErrorContainer = this._form.querySelector(`[name="${input.name}-error"]`);
     
         if (isInputValid) {
             this._setInputValid(input);
