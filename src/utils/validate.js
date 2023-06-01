@@ -11,14 +11,17 @@ export function enableValidation(validationConfig) {
         const validator = new FormValidator(form, config);
         validator.enableValidation();
 
-        formValidators[form.name] = validator;
+        const formName = form.getAttribute("name");
+        formValidators[formName] = validator;
     })
 }
 
 //сбрасывает валиацию для формы попапа
 export function resetPopupFormValidation(popup) {
     const form = popup.querySelector("form");
-    const validator = formValidators[form.name];
+    const formName = form.getAttribute("name");
+
+    const validator = formValidators[formName];
     validator.resetValidation();
 }
     

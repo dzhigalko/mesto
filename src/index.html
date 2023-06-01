@@ -11,7 +11,9 @@
         </header>
         <main class="content">
             <section class="profile">
-                <img class="avatar" src="<%=require('./images/ava.svg')%>" alt="Фото профиля">
+                <button class="profile__avatar-button" type="button" aria-label="Редактировать">
+                    <img class="avatar" src="#" alt="Фото профиля">
+                </button>
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
                     <button class="profile__button-edit" type="button" aria-label="Редактировать"></button>
@@ -26,7 +28,10 @@
                         <img class="photo__item" src="#" alt="">
                         <div class="photo__info">
                             <h3 class="photo__description"></h3>
-                            <button class="photo__like" type="button" aria-label="Лайк"></button>
+                            <div class="photo__like-container">
+                                <button class="photo__like" type="button" aria-label="Лайк"></button>
+                                <h4 class="photo__like-counter">&nbsp;</h4>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -62,17 +67,17 @@
         <div class="popup popup_type_add-photo">
             <div class="popup__container">
                 <h2 class="popup__title">Новое место</h2>
-                <button class="popup__close-button popup__close-button_type_add-photo" type="button" aria-label="Закрыть"></button>
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
                 <form class="popup__form popup__add-photo-form" name="photo" novalidate>
                     <input
                     required
-                    name="place"
+                    name="name"
                     class="popup__input"
                     type="text"
                     placeholder="Название"
                     minlength="2"
                     maxlength="30">
-                    <span class="popup__error" id="place-error"></span>
+                    <span class="popup__error" id="name-error"></span>
                     <input
                     required
                     name="link"
@@ -90,6 +95,29 @@
                 <img class="popup__image" src="#" alt="">
                 <figcaption class="popup__image-name"></figcaption>
             </figure>
+        </div>
+        <div class="popup popup_type_edit-avatar">
+            <div class="popup__container">
+                <h2 class="popup__title">Обновить аватар</h2>
+                <button class="popup__close-button popup__close-button_type_edit-avatar" type="button" aria-label="Закрыть"></button>
+                <form class="popup__form popup__edit-avatar-form" name="edit-avatar" novalidate>
+                    <input
+                    required
+                    name="avatar"
+                    class="popup__input"
+                    type="url"
+                    placeholder="Ссылка на картинку">
+                    <span class="popup__error" id="avatar-error"></span>
+                    <button disabled class="popup__button popup__button_disabled" type="submit" aria-label="Сохранить">Сохранить</button>    
+                </form>
+            </div>
+        </div>
+        <div class="popup popup_type_delete-photo">
+            <div class="popup__container">
+                <h2 class="popup__title popup__title_type_delete-photo">Вы уверены?</h2>
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+                <button class="popup__button" type="button" aria-label="Да">Да</button>
+            </div>
         </div>
         <footer class="footer">
             <p class="footer__copyright">&copy; 2023. Дарья Жигалко</p>
