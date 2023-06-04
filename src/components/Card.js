@@ -1,10 +1,10 @@
 export default class Card {
-    constructor(data, templateSelector, handleImageClick, handleRemoveCard, handleLikeCard) {
+    constructor(data, templateSelector, handleImageClick, makeRemoveCardRequest, makeLikeCardRequest) {
         this._data = data;
         this._templateSelector = templateSelector;
         this._handleImageClick = handleImageClick;
-        this._handleRemoveCard = handleRemoveCard;
-        this._handleLikeCard = handleLikeCard;
+        this._makeRemoveCardRequest = makeRemoveCardRequest;
+        this._makeLikeCardRequest = makeLikeCardRequest;
 
         const photoTemplate = document.querySelector(this._templateSelector);
         this._cardElement = photoTemplate.content.cloneNode(true);
@@ -47,29 +47,37 @@ export default class Card {
     }
 
     _handleLikeButtonClick = () => {
-        this._handleLikeCard(this._data).then((data) => {
+        this._makeLikeCardRequest((response) => {
             this._data.isLikedByMe = !this._data.isLikedByMe;
 
-            if (data.likes.length > 0) {
-                this._likesCounter.textContent = data.likes.length;
+            if (response.likes.length > 0) {
+                this._likesCounter.textContent = response.likes.length;
             } else {
                 this._likesCounter.textContent = "";
             }
-            
+
             this._likeButton.classList.toggle("photo__like_active")
-        });
+        }, this);
     }
 
     _handleTrashButtonClick = (event) => {
-        this._handleRemoveCard(this._data).then(() => {
+        this._makeRemoveCardRequest(() => {
             const photo = event.target.closest(".photo");
             photo.remove();
-        }).catch(() => {});
+        }, this);
     }
 
     _getImageClickHandler() {
         return () => {
             this._handleImageClick(this._data.link, this._data.name);
         }
+    }
+
+    getId() {
+        return this._data._id;
+    }
+
+    isLikedByMe() {
+        return this._data.isLikedByMe;
     }
 }

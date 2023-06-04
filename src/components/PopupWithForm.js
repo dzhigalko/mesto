@@ -34,10 +34,10 @@ export default class PopupWithForm extends Popup {
             const oldText = this._submitButton.textContent;
             this._submitButton.textContent = "Сохранение...";
 
-            this._submitHandler(this._getInputValues()).then(() => {
+            this._submitHandler(() => {
                 this.close();
                 this._submitButton.textContent = oldText;
-            });
+            }, this._getInputValues());
         });
     }
 

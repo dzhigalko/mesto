@@ -36,73 +36,76 @@ const api = new Api({
 const fullImagePopup = new PopupWithImage(fullImagePopupSelector);
 const userInfo = new UserInfo(nameSelector, aboutSelector, avatarSelector);
 
-const profilePopup = new PopupWithForm(profilePopupSelector, (values) => {
+const profilePopup = new PopupWithForm(profilePopupSelector, (onResponse, values) => {
     const { name, about } = values;
     
-    return api.changeUserProfile(name, about).then(() => {
+    api.changeUserProfile(name, about).then(() => {
         userInfo.setUserInfo(name, about);
-    });
+    }).finally(onResponse);
 }, resetPopupFormValidation);
 
-const addPhotoPopup = new PopupWithForm(addPhotoPopupSelector, (values) => {
+const addPhotoPopup = new PopupWithForm(addPhotoPopupSelector, (onResponse, values) => {
     const { name, link } = values;
 
-    return api.addCard(name, link).then((card) => {
+    api.addCard(name, link).then((card) => {
         cardsSection.addItem(cardRenderer({isMyCard: true, ...card}), true);
-    })
+    }).finally(onResponse);
 }, resetPopupFormValidation);
 
 const deletePhotoConfirmationPopup = new PopupWithConfirmation(deletePhotoConfirmationPopupSelector, () => {
     console.log("delete");
 });
 
-const editAvatarPopup = new PopupWithForm(editAvatarPopupSelector, (values) => {
+const editAvatarPopup = new PopupWithForm(editAvatarPopupSelector, (onResponse, values) => {
     const { avatar } = values;
 
-    return api.changeAvatar(avatar).then(() => {
+    api.changeAvatar(avatar).then(() => {
         userInfo.setUserAvatar(avatar);
-    });
+    }).finally(onResponse);
 }, resetPopupFormValidation)
 
 const cardRenderer = item => {
+    const makeLikeCardRequest = (onResponse, card) => {
+        if (card.isLikedByMe()) {
+            api.deleteCardLike(card.getId()).then(onResponse)
+        } else {
+            api.addCardLike(card.getId()).then(onResponse);
+        }
+    }
+
+    const makeRemoveCardRequest = (onResponse, card) => {
+        deletePhotoConfirmationPopup.open(() => {
+            api.deleteCard(card.getId()).then(onResponse)
+        })
+    }
+
     const card = new Card(
         item,
         photoTemplateSelector, 
         (link, name) => {
             fullImagePopup.open(name, link);
         },
-        (card) => {
-            return deletePhotoConfirmationPopup.open().then(() => api.deleteCard(card._id));
-        },
-        (card) => {
-            if (card.isLikedByMe) {
-                return api.deleteCardLike(card._id);
-            } else {
-                return api.addCardLike(card._id);
-            }
-        }
+        makeRemoveCardRequest,
+        makeLikeCardRequest
     );
+
     const photo = card.createElement();
 
     return photo;
 }
 
-const initialCards = new Array();
-const cardsSection = new Section({ items: initialCards, renderer: cardRenderer }, photoAreaSelector);
+const cardsSection = new Section(cardRenderer, photoAreaSelector);
 
 Promise.all([api.getUserProfile(), api.getInitialCards()]).then(([ profile, cards ]) => {
     userInfo.setUserInfo(profile.name, profile.about);
     userInfo.setUserAvatar(profile.avatar);
 
     cards.forEach(c => {
-        initialCards.push({
-            isLikedByMe: c.likes.some(l => l._id == profile._id),
-            isMyCard: c.owner._id == profile._id,
-            ...c
-        })
+        c.isLikedByMe = c.likes.some(l => l._id == profile._id),
+        c.isMyCard = c.owner._id == profile._id
     });
 
-    cardsSection.render();
+    cardsSection.renderItems(cards);
 })
 
 // Открывание попапа Редактирования профиля c сохранение данных в полях ввода
