@@ -24,14 +24,13 @@ export default class Api {
                 'Content-Type': 'application/json'
             }
         })
-        .catch(this._errorHandler)
         .then((res) => {
             if (!res.ok) {
                 return Promise.reject({"response": res})
             } 
 
             return res.json()
-        });
+        }).catch(this._errorHandler);
     }
 
     getInitialCards() {

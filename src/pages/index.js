@@ -36,19 +36,21 @@ const api = new Api({
 const fullImagePopup = new PopupWithImage(fullImagePopupSelector);
 const userInfo = new UserInfo(nameSelector, aboutSelector, avatarSelector);
 
-const profilePopup = new PopupWithForm(profilePopupSelector, (onResponse, values) => {
+const profilePopup = new PopupWithForm(profilePopupSelector, (onResponse, values, popup) => {
     const { name, about } = values;
     
     api.changeUserProfile(name, about).then(() => {
         userInfo.setUserInfo(name, about);
+        popup.close();
     }).finally(onResponse);
 }, resetPopupFormValidation);
 
-const addPhotoPopup = new PopupWithForm(addPhotoPopupSelector, (onResponse, values) => {
+const addPhotoPopup = new PopupWithForm(addPhotoPopupSelector, (onResponse, values, popup) => {
     const { name, link } = values;
 
     api.addCard(name, link).then((card) => {
         cardsSection.addItem(cardRenderer({isMyCard: true, ...card}), true);
+        popup.close();
     }).finally(onResponse);
 }, resetPopupFormValidation);
 
@@ -56,26 +58,27 @@ const deletePhotoConfirmationPopup = new PopupWithConfirmation(deletePhotoConfir
     console.log("delete");
 });
 
-const editAvatarPopup = new PopupWithForm(editAvatarPopupSelector, (onResponse, values) => {
+const editAvatarPopup = new PopupWithForm(editAvatarPopupSelector, (onResponse, values, popup) => {
     const { avatar } = values;
 
     api.changeAvatar(avatar).then(() => {
         userInfo.setUserAvatar(avatar);
+        popup.close();
     }).finally(onResponse);
 }, resetPopupFormValidation)
 
 const cardRenderer = item => {
     const makeLikeCardRequest = (onResponse, card) => {
         if (card.isLikedByMe()) {
-            api.deleteCardLike(card.getId()).then(onResponse)
+            api.deleteCardLike(card.getId()).then(onResponse).catch(err => console.log(`Ошибка при удаление лайка карты ${err}`));
         } else {
-            api.addCardLike(card.getId()).then(onResponse);
+            api.addCardLike(card.getId()).then(onResponse).catch(err => console.log(`Ошибка при лайке карты ${err}`));
         }
     }
 
     const makeRemoveCardRequest = (onResponse, card) => {
         deletePhotoConfirmationPopup.open(() => {
-            api.deleteCard(card.getId()).then(onResponse)
+            api.deleteCard(card.getId()).then(onResponse).catch(err => console.log(`Ошибка удалении карты ${err}`));
         })
     }
 

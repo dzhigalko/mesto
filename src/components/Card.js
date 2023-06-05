@@ -7,7 +7,7 @@ export default class Card {
         this._makeLikeCardRequest = makeLikeCardRequest;
 
         const photoTemplate = document.querySelector(this._templateSelector);
-        this._cardElement = photoTemplate.content.cloneNode(true);
+        this._cardElement = photoTemplate.content.querySelector(".photo").cloneNode(true);
         this._photoImage = this._cardElement.querySelector(".photo__item");
         this._photoPlace = this._cardElement.querySelector(".photo__description");
         this._likeButton = this._cardElement.querySelector(".photo__like");
@@ -62,8 +62,8 @@ export default class Card {
 
     _handleTrashButtonClick = (event) => {
         this._makeRemoveCardRequest(() => {
-            const photo = event.target.closest(".photo");
-            photo.remove();
+            this._cardElement.remove()
+            this._cardElement = null;
         }, this);
     }
 
